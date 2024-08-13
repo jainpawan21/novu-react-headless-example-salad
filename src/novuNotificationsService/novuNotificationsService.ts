@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import { HeadlessService } from "@novu/headless";
-import type { IMessage, ISession } from "@novu/notification-center";
-import type { IPaginatedResponse } from "@novu/shared";
+import type {
+  // IMessage,
+  ISession,
+} from "@novu/notification-center";
+// import type { IPaginatedResponse } from "@novu/shared";
 
 type OnPushNotificationsHandler = (notifications: any[]) => void;
 
@@ -54,7 +57,7 @@ const fetchNotifications = async (
 
   headlessService?.fetchNotifications({
     listener: () => {},
-    onSuccess: (response: IPaginatedResponse<IMessage>) => {
+    onSuccess: (response) => {
       const { data } = response;
       onPushNotifications(data);
     },
@@ -75,8 +78,9 @@ const listenNotificationReceiveChange = async (
   }
 
   headlessService?.listenNotificationReceive({
-    listener: (response: IMessage) => {
+    listener: (response) => {
       onPushNotification(response);
+      fetchNotifications(onPushNotification);
     },
   });
 };
