@@ -9,7 +9,7 @@ const YOUR_APPLICATION_IDENTIFIER = "YOUR_APPLICATION_IDENTIFIER";
 const YOUR_SUBSCRIBER_HASH = "YOUR_SUBSCRIBER_HASH";
 
 const onPushNotifications = (appNovuNotifications: (any | null)[]) => {
-  console.log("notifications: ", appNovuNotifications);
+  // console.log("notifications: ", appNovuNotifications);
 };
 
 initializeSession(
@@ -18,8 +18,10 @@ initializeSession(
   YOUR_SUBSCRIBER_HASH
 )
   .then(() => {
+    console.log("initialization ===> ");
     fetchNotifications(onPushNotifications);
-    listenNotificationReceiveChange(() => {});
+    listenNotificationReceiveChange();
+
     return null;
   })
   .catch((error: Error) => {

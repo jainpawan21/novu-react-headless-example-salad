@@ -55,11 +55,14 @@ const fetchNotifications = async (
     throw new Error("Session is not initialized");
   }
 
+  console.log("headlessService?.fetchNotifications ===> ");
   headlessService?.fetchNotifications({
     listener: () => {},
     onSuccess: (response) => {
-      const { data } = response;
-      onPushNotifications(data);
+      console.log("================================================");
+      console.log("headlessService?.fetchNotifications -> onSuccess");
+      // const { data } = response;
+      // onPushNotifications(data);
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
@@ -70,17 +73,15 @@ const fetchNotifications = async (
   });
 };
 
-const listenNotificationReceiveChange = async (
-  onPushNotification: (notification: any | null) => void
-) => {
+const listenNotificationReceiveChange = async () => {
   if (!sessionInitialized) {
     throw new Error("Session is not initialized");
   }
 
   headlessService?.listenNotificationReceive({
-    listener: (response) => {
-      onPushNotification(response);
-      fetchNotifications(onPushNotification);
+    listener: () => {
+      console.log("headlessService?.listenNotificationReceive -> listener");
+      fetchNotifications(() => {});
     },
   });
 };
